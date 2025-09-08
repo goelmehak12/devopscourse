@@ -8,12 +8,13 @@ pipeline {
             steps {
                 checkout scm
                 sh 'ls -l'
+                sh 'ls -l pushdockerimage'  // List files inside the folder to confirm Dockerfile is there
             }
         }
         stage('Build Image') {
             steps {
-                // Build Docker image using current directory
-                sh 'docker build -t dockermehak/jenkinstest:$BUILD_NUMBER .'
+                // Build Docker image using the correct directory where Dockerfile is located
+                sh 'docker build -t dockermehak/jenkinstest:$BUILD_NUMBER ./pushdockerimage'
             }
         }
         stage('Docker Login') {
